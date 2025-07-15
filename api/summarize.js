@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
             messages: [
                 {
                     role: 'system',
-                    content: 'You are a helpful assistant that summarizes articles.',
+                    content: 'You are a helpful assistant that summarizes articles. Use Markdown for formatting, such as paragraphs.',
                 },
                 {
                     role: 'user',

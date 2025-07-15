@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const summaryContainer = document.getElementById('summary-container');
     const summaryText = document.getElementById('summary-text');
     const copyBtn = document.getElementById('copy-btn');
+    const converter = new showdown.Converter();
 
     copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(summaryText.textContent);
@@ -39,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await response.json();
-            summaryText.textContent = data.summary;
+            const htmlSummary = converter.makeHtml(data.summary);
+            summaryText.innerHTML = htmlSummary;
             summaryContainer.classList.remove('hidden');
         } catch (error) {
             alert(error.message);
