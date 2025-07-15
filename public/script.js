@@ -3,6 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const articleText = document.getElementById('article-text');
     const summaryContainer = document.getElementById('summary-container');
     const summaryText = document.getElementById('summary-text');
+    const copyBtn = document.getElementById('copy-btn');
+
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(summaryText.textContent);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+            copyBtn.textContent = 'Copy';
+        }, 2000);
+    });
 
     summarizeBtn.addEventListener('click', async () => {
         const text = articleText.value;
