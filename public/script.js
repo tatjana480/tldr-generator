@@ -39,10 +39,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error('Something went wrong. Please try again.');
             }
 
-            const data = await response.json();
-            const htmlSummary = converter.makeHtml(data.summary);
-            summaryText.innerHTML = htmlSummary;
+            summaryText.innerHTML = '';
             summaryContainer.classList.remove('hidden');
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let fullSummary = '';
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                
+                const chunk = decoder.decode(value, { stream: true });
+                fullSummary += chunk;
+                summaryText.innerHTML = converter.makeHtml(fullSummary);
+            }
+
         } catch (error) {
             alert(error.message);
         } finally {
