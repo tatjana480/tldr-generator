@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI TL;DR Generator</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -19,7 +22,10 @@
                 <label><input type="radio" name="length" value="medium"> Medium</label>
                 <label><input type="radio" name="length" value="long"> Long</label>
             </div>
-            <button id="summarize-btn">Summarize</button>
+            <button id="summarize-btn">
+                <span id="btn-text">Summarize</span>
+                <div id="loader" class="hidden"></div>
+            </button>
             <div id="summary-container" class="hidden">
                 <h2>Summary</h2>
                 <button id="copy-btn">Copy</button>

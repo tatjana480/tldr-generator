@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const summaryText = document.getElementById('summary-text');
     const copyBtn = document.getElementById('copy-btn');
     const converter = new showdown.Converter();
+    const loader = document.getElementById('loader');
+    const btnText = document.getElementById('btn-text');
 
     copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(summaryText.textContent);
@@ -24,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         summarizeBtn.disabled = true;
-        summarizeBtn.textContent = 'Summarizing...';
+        btnText.textContent = 'Summarizing...';
+        loader.classList.remove('hidden');
 
         try {
             const response = await fetch('/api/summarize', {
@@ -59,7 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(error.message);
         } finally {
             summarizeBtn.disabled = false;
-            summarizeBtn.textContent = 'Summarize';
+            btnText.textContent = 'Summarize';
+            loader.classList.add('hidden');
         }
     });
 });
