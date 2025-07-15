@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
+import { Readable } from 'stream';
 
-// This is required for Vercel Edge Functions
 export const config = {
   runtime: 'edge',
 };
@@ -28,7 +28,7 @@ export default async function handler(req) {
         };
         const summaryLength = lengthMap[length] || 'one paragraph';
 
-        const stream = await openai.chat.completions.create({
+        const apiStream = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
             messages: [
                 {
@@ -42,10 +42,19 @@ export default async function handler(req) {
             ],
             stream: true,
         });
-        
-        const readableStream = stream.toReadableStream();
 
-        return new Response(readableStream, {
+        const stream = new ReadableStream({
+            async start(controller) {
+                const encoder = new TextEncoder();
+                for await (const chunk of apiStream) {
+                    const content = chunk.choices[0]?.delta?.content || '';
+                    controller.enqueue(encoder.encode(content));
+                }
+                controller.close();
+            },
+        });
+
+        return new Response(stream, {
             headers: { 'Content-Type': 'text/plain; charset=utf-8' },
         });
 
