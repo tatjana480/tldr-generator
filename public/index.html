@@ -14,6 +14,11 @@
         </header>
         <main>
             <textarea id="article-text" placeholder="Paste your article here..."></textarea>
+            <div class="summary-options">
+                <label><input type="radio" name="length" value="short" checked> Short</label>
+                <label><input type="radio" name="length" value="medium"> Medium</label>
+                <label><input type="radio" name="length" value="long"> Long</label>
+            </div>
             <button id="summarize-btn">Summarize</button>
             <div id="summary-container" class="hidden">
                 <h2>Summary</h2>

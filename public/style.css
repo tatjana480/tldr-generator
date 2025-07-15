@@ -55,6 +55,13 @@ button:hover {
     background-color: #434190;
 }
 
+.summary-options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
 #summary-container {
     margin-top: 2rem;
     text-align: left;

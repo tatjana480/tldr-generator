@@ -10,11 +10,19 @@ module.exports = async (req, res) => {
         return res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 
-    const { text } = req.body;
+    const { text, length } = req.body;
 
     if (!text) {
         return res.status(400).json({ error: 'Text is required' });
     }
+
+    const lengthMap = {
+        short: 'a single, concise sentence',
+        medium: 'one paragraph',
+        long: 'three detailed paragraphs',
+    };
+
+    const summaryLength = lengthMap[length] || 'one paragraph';
 
     try {
         const completion = await openai.chat.completions.create({
@@ -26,7 +34,7 @@ module.exports = async (req, res) => {
                 },
                 {
                     role: 'user',
-                    content: `Please provide a TL;DR summary of the following article:\n\n${text}`,
+                    content: `Please provide a TL;DR summary of the following article. The summary should be ${summaryLength}:\n\n${text}`,
                 },
             ],
         });

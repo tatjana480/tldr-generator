@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     summarizeBtn.addEventListener('click', async () => {
         const text = articleText.value;
+        const length = document.querySelector('input[name="length"]:checked').value;
 
         if (!text.trim()) {
             alert('Please paste some article text first.');
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ text }),
+                body: JSON.stringify({ text, length }),
             });
 
             if (!response.ok) {
